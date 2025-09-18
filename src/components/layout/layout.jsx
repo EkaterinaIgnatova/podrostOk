@@ -1,6 +1,6 @@
 import { Container } from "@mui/material";
 import { Header } from "../header/header";
-import { Outlet } from "react-router";
+import { Home } from "../home/home";
 import { useRef } from "react";
 import { About } from "../about/about";
 import { Services } from "../services/services";
@@ -16,7 +16,7 @@ export const Layout = () => {
     if (ref.current) {
       ref.current.lastElementChild.children[index].scrollIntoView({
         behavior: "smooth",
-        block: "center",
+        block: "start",
       });
     }
   };
@@ -52,7 +52,7 @@ export const Layout = () => {
     <>
       <Header onSelectMenuItem={handleSelectMenuItem} menuItems={menuItems} />
       <Container maxWidth="xl" ref={ref}>
-        <Outlet context={menuItems} />
+        <Home menuItems={menuItems} />
       </Container>
     </>
   );

@@ -1,7 +1,7 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router";
-import { Home } from "../home/home";
 import { Layout } from "../layout/layout";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Provider } from "react-redux";
+import { store } from "../../redux/store";
 
 export const App = () => {
   let theme = createTheme({
@@ -49,16 +49,11 @@ export const App = () => {
   });
 
   return (
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="*" element={<Navigate to={"/"} replace />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <Layout />
+      </ThemeProvider>
+    </Provider>
   );
 };
 

@@ -1,9 +1,11 @@
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, useMediaQuery } from "@mui/material";
 import { VkIcon } from "../../assets/icon_vk.jsx";
 import { TgIcon } from "../../assets/icon_tg.jsx";
 import { WhatsupIcon } from "../../assets/icon_whatsup.jsx";
 
 export const Contacts = () => {
+  const matches = useMediaQuery((theme) => theme.breakpoints.up("sm"));
+
   const socialMedia = [
     { icon: <VkIcon />, link: "https://vk.com/podrostok_syktyvkar" },
     { icon: <TgIcon />, link: "https://t.me/Ignatova_NVI" },
@@ -12,7 +14,7 @@ export const Contacts = () => {
 
   return (
     <>
-      <Box sx={{ height: { xs: "200px", md: "400px" } }}>
+      <Box sx={{ height: matches ? "400px" : "200px" }}>
         <iframe
           src="https://yandex.ru/map-widget/v1/?ll=50.808677%2C61.681945&mode=search&ol=geo&ouri=ymapsbm1%3A%2F%2Fgeo%3Fdata%3DCgg1NzU2OTExORJe0KDQvtGB0YHQuNGPLCDQoNC10YHQv9GD0LHQu9C40LrQsCDQmtC-0LzQuCwg0KHRi9C60YLRi9Cy0LrQsNGALCDRg9C70LjRhtCwINCT0YDQvtC80L7QstCwLCA3NSIKDRY8S0IVT7p2Qg%2C%2C&z=16.32"
           style={{
@@ -26,7 +28,7 @@ export const Contacts = () => {
       <Box
         sx={{
           display: "flex",
-          flexDirection: { xs: "column", sm: "row" },
+          flexDirection: matches ? "row" : "column",
           justifyContent: "space-between",
           gap: "8px",
           fontWeight: "600",

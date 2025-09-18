@@ -1,9 +1,9 @@
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button, Grid, useMediaQuery } from "@mui/material";
 import womanAndGirl from "../../assets/woman_and_girl.svg";
-import { useOutletContext } from "react-router";
+import React from "react";
 
-export const Home = () => {
-  const menuItems = useOutletContext();
+export const Home = ({ menuItems }) => {
+  const matches = useMediaQuery((theme) => theme.breakpoints.up("sm"));
 
   return (
     <>
@@ -12,7 +12,7 @@ export const Home = () => {
         spacing={4}
         sx={{ display: "flex", alignItems: "center", padding: "32px 0" }}
       >
-        <Grid size={{ xs: 12, sm: 6 }}>
+        <Grid size={matches ? 6 : 12}>
           <h1>
             Услуги психолога для детей школьного возраста, подростков и их
             родителей в Сыктывкаре
@@ -37,7 +37,7 @@ export const Home = () => {
         <Grid
           sx={{
             flexGrow: "1",
-            display: { xs: "none", sm: "flex" },
+            display: matches ? "flex" : "none",
             justifyContent: "center",
           }}
           size="6"
@@ -54,10 +54,7 @@ export const Home = () => {
         }}
       >
         {menuItems.map(({ title, component }) => (
-          <div>
-            <h2>{title} </h2>
-            {component}
-          </div>
+          <div>{React.cloneElement(component, { title: title })}</div>
         ))}
       </Box>
     </>
