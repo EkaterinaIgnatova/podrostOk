@@ -1,5 +1,4 @@
 import { Box, Button, Grid, useMediaQuery } from "@mui/material";
-import womanAndGirl from "../../assets/woman_and_girl.svg";
 import React from "react";
 
 export const Home = ({ menuItems }) => {
@@ -13,14 +12,11 @@ export const Home = ({ menuItems }) => {
         sx={{ display: "flex", alignItems: "center", padding: "32px 0" }}
       >
         <Grid size={matches ? 6 : 12}>
-          <h1>
-            Услуги психолога для детей школьного возраста, подростков и их
-            родителей в Сыктывкаре
-          </h1>
+          <h1>Психолог для подростков и взрослых</h1>
           <Box
             sx={{
               display: "flex",
-              gap: "1rem",
+              gap: "16px",
             }}
           >
             <Button variant="contained" href="tel:+79129649303">
@@ -42,7 +38,11 @@ export const Home = ({ menuItems }) => {
           }}
           size="6"
         >
-          <img src={womanAndGirl} width="100%" style={{ maxWidth: "400px" }} />
+          <img
+            src="https://podrostok-syktyvkar.ru/img/woman_and_girl.svg"
+            width="100%"
+            style={{ maxWidth: "400px" }}
+          />
         </Grid>
       </Grid>
       <Box

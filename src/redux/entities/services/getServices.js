@@ -5,6 +5,6 @@ export const getServices = createAsyncThunk(
   async () => {
     const response = await fetch("https://podrostok-syktyvkar.ru/api/services");
     const result = await response.json();
-    return result;
+    return result.reverse();
   }
 );

@@ -6,7 +6,7 @@ import {
   ListItemButton,
   ListItemText,
 } from "@mui/material";
-import { HeaderContacts } from "../headerContacts/headerContacts";
+import { HeaderContacts } from "./headerContacts";
 
 export const HeaderMenu = ({ menuItems, onSelectMenuItem }) => {
   return (

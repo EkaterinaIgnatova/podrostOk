@@ -1,8 +1,8 @@
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
-import { Button, MobileStepper, useMediaQuery } from "@mui/material";
+import { Button, MobileStepper } from "@mui/material";
 import { useState } from "react";
 
-export const ReviewsNavigation = ({ reviewsIds, onReviewsScroll }) => {
+export const ReviewsNavigation = ({ reviewsIds, onReviewsScroll, matches }) => {
   const [activeStep, setActiveStep] = useState(0);
 
   const handleNextReview = () => {
@@ -15,26 +15,30 @@ export const ReviewsNavigation = ({ reviewsIds, onReviewsScroll }) => {
     onReviewsScroll(activeStep - 1);
   };
 
-  const matches = [
-    useMediaQuery((theme) => theme.breakpoints.only("xs")),
-    useMediaQuery((theme) => theme.breakpoints.only("sm")),
-    useMediaQuery((theme) => theme.breakpoints.only("md")),
-    useMediaQuery((theme) => theme.breakpoints.up("lg")),
-  ];
+  const stepsCount =
+    reviewsIds.length > matches.findIndex((match) => match)
+      ? reviewsIds.length - matches.findIndex((match) => match)
+      : 1;
 
   return (
     <MobileStepper
       variant="dots"
-      steps={reviewsIds.length - matches.findIndex((match) => match)}
+      steps={stepsCount}
       position="static"
       activeStep={activeStep}
+      sx={{
+        margin: "auto",
+        width:
+          stepsCount > 1
+            ? "100%"
+            : (100 / (matches.findIndex((match) => match) + 1)) *
+                reviewsIds.length +
+              "%",
+      }}
       nextButton={
         <Button
           onClick={handleNextReview}
-          disabled={
-            activeStep ===
-            reviewsIds.length - matches.findIndex((match) => match) - 1
-          }
+          disabled={activeStep === stepsCount - 1}
         >
           <KeyboardArrowRight />
         </Button>

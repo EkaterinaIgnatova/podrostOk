@@ -8,10 +8,10 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Drawer from "@mui/material/Drawer";
 import logo from "../../assets/logo.svg";
-import { HeaderContacts } from "../headerContacts/headerContacts";
+import { HeaderContacts } from "./headerContacts";
 import { useTheme } from "@mui/material/styles";
 import { useMediaQuery } from "@mui/material";
-import { HeaderMenu } from "../headerMenu/headerMenu";
+import { HeaderMenu } from "./headerMenu";
 
 export const Header = ({ onSelectMenuItem, menuItems }) => {
   const theme = useTheme();

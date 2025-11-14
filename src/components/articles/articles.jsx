@@ -15,13 +15,22 @@ import {
   REQUEST_STATUS_PENDING,
 } from "../../redux/entities/requests/slice";
 import { selectArticlesIds } from "../../redux/entities/articles/slice";
-import { ArticleItem } from "../articleItem/articleItem";
+import { ArticleItem } from "./articleItem";
 import { useSelector } from "react-redux";
+import { use, useEffect } from "react";
+import { AddButton } from "../addButton/addButton";
+import { AdminContext } from "../adminContext/adminContext";
+import { ArticleDialog } from "./articleDialog";
 
 export const Articles = ({ title }) => {
+  const { isAdmin } = use(AdminContext);
   const theme = useTheme();
-  const requestStatus = useRequest(getArticles);
+
+  const { requestStatus, sendRequest } = useRequest(getArticles);
   const articlesIds = useSelector(selectArticlesIds);
+  useEffect(() => {
+    sendRequest();
+  }, []);
 
   const matches = [
     useMediaQuery((theme) => theme.breakpoints.only("xs")),
@@ -30,6 +39,8 @@ export const Articles = ({ title }) => {
     useMediaQuery((theme) => theme.breakpoints.up("lg")),
   ];
   const articlesCounts = [3, 3, 5, 7];
+
+  const articlesSize = 12 / (matches.findIndex((match) => match) + 1);
 
   if (
     requestStatus === REQUEST_STATUS_IDLE ||
@@ -48,7 +59,16 @@ export const Articles = ({ title }) => {
   if (!articlesIds.length) {
     return (
       <>
-        <h2>{title}</h2>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <h2>{title}</h2>
+          {isAdmin && <AddButton component={<ArticleDialog />} />}
+        </Box>
         <p style={{ textAlign: "center", opacity: "0.7" }}>
           Список статей пуст.
         </p>
@@ -58,54 +78,76 @@ export const Articles = ({ title }) => {
 
   return (
     <>
-      <h2>{title}</h2>
-      <Grid container spacing={2}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <h2>{title}</h2>
+        {isAdmin && <AddButton component={<ArticleDialog />} />}
+      </Box>
+      <Grid
+        container
+        spacing={2}
+        sx={{
+          justifyContent:
+            articlesIds.length >
+            articlesCounts[matches.findIndex((match) => match)] / 2
+              ? "normal"
+              : "center",
+        }}
+      >
         {articlesIds
           .slice(0, articlesCounts[matches.findIndex((match) => match)])
           .map((id) => (
-            <ArticleItem id={id} key={id} />
+            <ArticleItem
+              id={id}
+              key={id}
+              isAdmin={isAdmin}
+              size={articlesSize}
+            />
           ))}
-        <Grid
-          size={{
-            xs: 12,
-            sm: 6,
-            md: 4,
-            lg: 3,
-          }}
-          sx={{
-            minHeight: "200px",
-          }}
-        >
-          <Card
+        {articlesIds.length >
+          articlesCounts[matches.findIndex((match) => match)] && (
+          <Grid
+            size={articlesSize}
             sx={{
-              height: "100%",
-              boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.2)",
+              minHeight: "200px",
             }}
           >
-            <CardActionArea
-              component="a"
-              href="https://vk.com/@podrostok_syktyvkar"
-              target="_blank"
+            <Card
               sx={{
                 height: "100%",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
+                boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.2)",
               }}
             >
-              <CardContent
+              <CardActionArea
+                component="a"
+                href="https://vk.com/@podrostok_syktyvkar"
+                target="_blank"
                 sx={{
-                  color: theme.palette.text.main,
-                  fontSize: "1.4rem",
-                  textAlign: "center",
-                  opacity: "0.7",
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
                 }}
               >
-                Другие статьи
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Grid>
+                <CardContent
+                  sx={{
+                    color: theme.palette.text.main,
+                    fontSize: "1.4rem",
+                    textAlign: "center",
+                    opacity: "0.7",
+                  }}
+                >
+                  Другие статьи
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+        )}
       </Grid>
     </>
   );

@@ -3,15 +3,25 @@ import { useRequest } from "../../redux/hooks/useRequest";
 import { getQuestions } from "../../redux/entities/questions/getQuestions";
 import { useSelector } from "react-redux";
 import { selectQuestionsIds } from "../../redux/entities/questions/slice";
-import { QuestionItem } from "../questionItem.jsx/questionItem";
+import { QuestionItem } from "./questionItem";
 import {
   REQUEST_STATUS_IDLE,
   REQUEST_STATUS_PENDING,
 } from "../../redux/entities/requests/slice";
+import { use, useEffect } from "react";
+import { AdminContext } from "../adminContext/adminContext";
+import { AddButton } from "../addButton/addButton";
+import { QuestionDialog } from "./questionDialog";
 
 export const Questions = ({ title }) => {
-  const requestStatus = useRequest(getQuestions);
+  const { isAdmin } = use(AdminContext);
+
+  const { requestStatus, sendRequest } = useRequest(getQuestions);
   const questionsIds = useSelector(selectQuestionsIds);
+
+  useEffect(() => {
+    sendRequest();
+  }, []);
 
   if (
     requestStatus === REQUEST_STATUS_IDLE ||
@@ -30,7 +40,17 @@ export const Questions = ({ title }) => {
   if (!questionsIds.length) {
     return (
       <>
-        <h2>{title}</h2>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <h2>{title}</h2>
+          {isAdmin && <AddButton component={<QuestionDialog />} />}
+        </Box>
+
         <p style={{ textAlign: "center", opacity: "0.7" }}>
           Список вопросов пуст.
         </p>
@@ -40,10 +60,19 @@ export const Questions = ({ title }) => {
 
   return (
     <>
-      <h2>{title}</h2>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <h2>{title}</h2>
+        {isAdmin && <AddButton component={<QuestionDialog />} />}
+      </Box>
       <Box sx={{ display: "flex", flexDirection: "column", gap: "16px" }}>
         {questionsIds.map((id) => (
-          <QuestionItem id={id} key={id} />
+          <QuestionItem id={id} key={id} isAdmin={isAdmin} />
         ))}
       </Box>
     </>

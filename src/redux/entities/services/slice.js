@@ -1,7 +1,10 @@
 import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 import { getServices } from "./getServices";
+import { postService } from "./postService";
+import { deleteService } from "./deleteService";
+import { putService } from "./putServices";
 
-const entityAdapter = createEntityAdapter();
+const entityAdapter = createEntityAdapter({ selectId: (entity) => entity._id });
 
 export const serviceSlice = createSlice({
   name: "services",
@@ -9,6 +12,16 @@ export const serviceSlice = createSlice({
   extraReducers: (bulder) => {
     bulder.addCase(getServices.fulfilled, (state, { payload }) => {
       entityAdapter.setAll(state, payload);
+    });
+    bulder.addCase(postService.fulfilled, (state, { payload }) => {
+      entityAdapter.setOne(state, payload);
+      entityAdapter.sortComparer;
+    });
+    bulder.addCase(deleteService.fulfilled, (state, { payload }) => {
+      entityAdapter.removeOne(state, payload);
+    });
+    bulder.addCase(putService.fulfilled, (state, { payload }) => {
+      entityAdapter.setOne(state, payload);
     });
   },
 });

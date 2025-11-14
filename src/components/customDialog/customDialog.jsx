@@ -16,9 +16,9 @@ export const CustomDialog = ({
   maxWidth,
   children,
   showActions,
-  submitTitle,
+  submitText,
   onSubmit,
-  disableSubmit,
+  loading,
 }) => {
   const theme = useTheme();
 
@@ -47,14 +47,10 @@ export const CustomDialog = ({
       </DialogTitle>
       <DialogContent>{children}</DialogContent>
       {showActions && (
-        <DialogActions>
+        <DialogActions sx={{ padding: "0 24px 16px 24px" }}>
           <Button onClick={onCloseDialog}>Отмена</Button>
-          <Button
-            variant="contained"
-            onClick={onSubmit}
-            disabled={disableSubmit}
-          >
-            {submitTitle}
+          <Button variant="contained" onClick={onSubmit} loading={loading}>
+            {submitText}
           </Button>
         </DialogActions>
       )}

@@ -7,6 +7,6 @@ export const getQuestions = createAsyncThunk(
       "https://podrostok-syktyvkar.ru/api/questions"
     );
     const result = await response.json();
-    return result;
+    return result.reverse();
   }
 );
