@@ -10,7 +10,7 @@ import {
 } from "../../redux/entities/requests/slice";
 import { use, useEffect } from "react";
 import { AdminContext } from "../adminContext/adminContext";
-import { AddButton } from "../addButton/addButton";
+import { AddButton } from "../actionButtons/addButton";
 import { QuestionDialog } from "./questionDialog";
 
 export const Questions = ({ title }) => {

@@ -8,8 +8,8 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { selectQuestionById } from "../../redux/entities/questions/slice";
 import { useSelector } from "react-redux";
-import { EditButton } from "../editButton/editButton";
-import { DeleteButton } from "../deleteButton/deleteButton";
+import { EditButton } from "../actionButtons/editButton";
+import { DeleteButton } from "../actionButtons/deleteButton";
 import { QuestionDialog } from "./questionDialog";
 import { deleteQuestion } from "../../redux/entities/questions/deleteQuestion";
 import { useRef } from "react";

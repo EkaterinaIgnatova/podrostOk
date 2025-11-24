@@ -46,8 +46,15 @@ export const CustomForm = ({
                   rows={formControl.rows}
                   multiline={formControl.multiline}
                   autoFocus={formControl.autoFocus}
-                  error={formControl.error}
-                  helperText={formControl.error && formControl.helperText}
+                  error={
+                    formControl.error ||
+                    (formControl.type === "number" && value < 1)
+                  }
+                  helperText={
+                    (formControl.error ||
+                      (formControl.type === "number" && value < 1)) &&
+                    formControl.helperText
+                  }
                   sx={formControl.styles}
                   onChange={(e) => {
                     onChange(e);

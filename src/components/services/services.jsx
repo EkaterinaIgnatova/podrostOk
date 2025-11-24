@@ -10,7 +10,7 @@ import {
 import { ServiceItem } from "./serviceItem";
 import { use, useEffect } from "react";
 import { AdminContext } from "../adminContext/adminContext";
-import { AddButton } from "../addButton/addButton";
+import { AddButton } from "../actionButtons/addButton";
 import { ServiceDialog } from "./serviceDialog";
 
 export const Services = ({ title }) => {

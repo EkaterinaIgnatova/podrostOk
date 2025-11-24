@@ -4,7 +4,10 @@ import { postQuestion } from "./postQuestion";
 import { deleteQuestion } from "./deleteQuestion";
 import { putQuestion } from "./putQuestion";
 
-const entityAdapter = createEntityAdapter({ selectId: (entity) => entity._id });
+const entityAdapter = createEntityAdapter({
+  sortComparer: (a, b) => (a.order > b.order ? 1 : -1),
+  selectId: (entity) => entity._id,
+});
 
 export const questionSlice = createSlice({
   name: "questions",

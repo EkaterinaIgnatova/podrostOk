@@ -3,9 +3,9 @@ import { selectReviewById } from "../../redux/entities/reviews/slice";
 import { useSelector } from "react-redux";
 import { CustomDialog } from "../customDialog/customDialog";
 import React, { useRef, useState } from "react";
-import { DeleteButton } from "../deleteButton/deleteButton";
+import { DeleteButton } from "../actionButtons/deleteButton";
 import { deleteReview } from "../../redux/entities/reviews/deleteReview";
-import { EditButton } from "../editButton/editButton";
+import { EditButton } from "../actionButtons/editButton";
 import { ReviewDialog } from "./reviewDialog";
 
 export const ReviewItem = React.memo(({ id, isAdmin, width }) => {

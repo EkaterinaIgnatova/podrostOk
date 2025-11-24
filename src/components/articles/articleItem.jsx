@@ -10,8 +10,8 @@ import {
   useTheme,
 } from "@mui/material";
 import { ArticleDialog } from "./articleDialog";
-import { EditButton } from "../editButton/editButton";
-import { DeleteButton } from "../deleteButton/deleteButton";
+import { EditButton } from "../actionButtons/editButton";
+import { DeleteButton } from "../actionButtons/deleteButton";
 import { deleteArticle } from "../../redux/entities/articles/deleteArticle";
 import { useRef } from "react";
 

@@ -18,7 +18,7 @@ import { selectArticlesIds } from "../../redux/entities/articles/slice";
 import { ArticleItem } from "./articleItem";
 import { useSelector } from "react-redux";
 import { use, useEffect } from "react";
-import { AddButton } from "../addButton/addButton";
+import { AddButton } from "../actionButtons/addButton";
 import { AdminContext } from "../adminContext/adminContext";
 import { ArticleDialog } from "./articleDialog";
 

@@ -11,7 +11,7 @@ import {
 } from "../../redux/entities/requests/slice";
 import { ReviewsNavigation } from "./reviewsNavigation";
 import { AdminContext } from "../adminContext/adminContext";
-import { AddButton } from "../addButton/addButton";
+import { AddButton } from "../actionButtons/addButton";
 import { ReviewDialog } from "./reviewDialog";
 
 export const Reviews = ({ title }) => {

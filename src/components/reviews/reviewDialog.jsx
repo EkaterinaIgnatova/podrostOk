@@ -44,7 +44,8 @@ export const ReviewDialog = ({ onCloseDialog, data, isNew }) => {
             label: "Имя",
             type: "text",
             autoFocus: true,
-            initialValue: data?.name || "",
+            initialValue: data?.name,
+            defaultValue: "",
           },
           {
             required: true,
@@ -53,7 +54,8 @@ export const ReviewDialog = ({ onCloseDialog, data, isNew }) => {
             type: "text",
             multiline: true,
             rows: 4,
-            initialValue: data?.text || "",
+            initialValue: data?.text,
+            defaultValue: "",
           },
         ]}
         onSubmit={handleSubmit}

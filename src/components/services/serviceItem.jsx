@@ -3,8 +3,8 @@ import { CustomDialog } from "../customDialog/customDialog";
 import { selectServiceById } from "../../redux/entities/services/slice";
 import { useSelector } from "react-redux";
 import { useRef, useState } from "react";
-import { EditButton } from "../editButton/editButton";
-import { DeleteButton } from "../deleteButton/deleteButton";
+import { EditButton } from "../actionButtons/editButton";
+import { DeleteButton } from "../actionButtons/deleteButton";
 import { deleteService } from "../../redux/entities/services/deleteService";
 import { ServiceDialog } from "./serviceDialog";
 
@@ -22,7 +22,10 @@ export const ServiceItem = ({ id, isAdmin }) => {
       serviceActionsRef.current.style.display = visible ? "flex" : "none";
   };
 
-  const matches = useMediaQuery((theme) => theme.breakpoints.up("sm"));
+  const matches = [
+    useMediaQuery((theme) => theme.breakpoints.up("sm")),
+    useMediaQuery((theme) => theme.breakpoints.up("md")),
+  ];
 
   return (
     <>
@@ -30,8 +33,8 @@ export const ServiceItem = ({ id, isAdmin }) => {
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          flexDirection: matches ? "row" : "column",
-          gap: matches ? "8px" : 0,
+          flexDirection: matches[0] ? "row" : "column",
+          gap: matches[0] ? "8px" : 0,
           alignItems: "center",
           padding: "0 16px",
           boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.2)",
@@ -43,7 +46,7 @@ export const ServiceItem = ({ id, isAdmin }) => {
         <h3
           style={{
             textTransform: "uppercase",
-            textAlign: matches ? "start" : "center",
+            textAlign: matches[0] ? "start" : "center",
           }}
         >
           {service.title}
@@ -52,8 +55,8 @@ export const ServiceItem = ({ id, isAdmin }) => {
           <Box
             ref={serviceActionsRef}
             sx={{
-              width: matches ? "calc(100% - 128px)" : "100%",
-              height: matches ? "100%" : "calc(100% - 50px)",
+              width: matches[0] ? "calc(100% - 128px)" : "100%",
+              height: matches[0] ? "100%" : "calc(100% - 50px)",
               position: "absolute",
               left: 0,
               top: 0,
@@ -78,9 +81,9 @@ export const ServiceItem = ({ id, isAdmin }) => {
           onClick={toggleReviewDialog}
           variant="contained"
           sx={{
-            width: matches ? "auto" : "100%",
+            width: matches[0] ? "auto" : "100%",
             flexShrink: "0",
-            marginBottom: matches ? 0 : "16px",
+            marginBottom: matches[0] ? 0 : "16px",
           }}
         >
           Подробнее
@@ -93,13 +96,21 @@ export const ServiceItem = ({ id, isAdmin }) => {
         title={service.title}
         maxWidth="md"
       >
-        <Box sx={{ display: "flex", gap: "32px", alignItems: "center" }}>
-          <img
-            src={service.img}
-            width="240px"
-            style={{ flexShrink: 0, maxHeight: "240px" }}
-          />
-          <Box sx={{ whiteSpace: "pre-line" }}>
+        <Box
+          sx={{
+            display: "flex",
+            gap: "32px",
+            alignItems: "center",
+            flexDirection: matches[1] ? "row" : "column",
+          }}
+        >
+          <img src={service.img} width="240px" style={{ maxHeight: "240px" }} />
+          <Box
+            sx={{
+              whiteSpace: "pre-line",
+              width: matches[1] ? "auto" : "100%",
+            }}
+          >
             {service.text}
             <Box
               sx={{

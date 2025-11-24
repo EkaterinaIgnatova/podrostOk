@@ -44,7 +44,8 @@ export const QuestionDialog = ({ onCloseDialog, data, isNew }) => {
             label: "Заголовок",
             type: "text",
             autoFocus: true,
-            initialValue: data?.title || "",
+            initialValue: data?.title,
+            defaultValue: "",
           },
           {
             required: true,
@@ -53,7 +54,15 @@ export const QuestionDialog = ({ onCloseDialog, data, isNew }) => {
             type: "text",
             multiline: true,
             rows: 4,
-            initialValue: data?.text || "",
+            initialValue: data?.text,
+            defaultValue: "",
+          },
+          {
+            name: "order",
+            label: "Порядок",
+            type: "number",
+            initialValue: data?.order,
+            helperText: "Число должно быть больше 0",
           },
         ]}
         onSubmit={handleSubmit}

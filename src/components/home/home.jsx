@@ -1,4 +1,4 @@
-import { Box, Button, Grid, useMediaQuery } from "@mui/material";
+import { Box, Button, useMediaQuery } from "@mui/material";
 import React from "react";
 
 export const Home = ({ menuItems }) => {
@@ -6,12 +6,16 @@ export const Home = ({ menuItems }) => {
 
   return (
     <>
-      <Grid
-        container
-        spacing={4}
-        sx={{ display: "flex", alignItems: "center", padding: "32px 0" }}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          padding: "32px 0",
+          gap: "32px",
+          justifyContent: "space-between",
+        }}
       >
-        <Grid size={matches ? 6 : 12}>
+        <Box>
           <h1>Психолог для подростков и взрослых</h1>
           <Box
             sx={{
@@ -29,22 +33,15 @@ export const Home = ({ menuItems }) => {
               Группа ВК
             </Button>
           </Box>
-        </Grid>
-        <Grid
-          sx={{
-            flexGrow: "1",
-            display: matches ? "flex" : "none",
-            justifyContent: "center",
-          }}
-          size="6"
-        >
+        </Box>
+        {matches && (
           <img
             src="https://podrostok-syktyvkar.ru/img/woman_and_girl.svg"
-            width="100%"
-            style={{ maxWidth: "400px" }}
+            width="50%"
+            style={{ maxHeight: "240px" }}
           />
-        </Grid>
-      </Grid>
+        )}
+      </Box>
       <Box
         sx={{
           display: "flex",

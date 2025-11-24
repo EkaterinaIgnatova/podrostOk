@@ -62,7 +62,7 @@ export const ServiceDialog = ({ onCloseDialog, data, isNew }) => {
           {
             required: true,
             name: "text",
-            label: "Заголовок",
+            label: "Текст",
             type: "text",
             multiline: true,
             rows: 4,
@@ -74,6 +74,13 @@ export const ServiceDialog = ({ onCloseDialog, data, isNew }) => {
             name: "img",
             type: "file",
             styles: { ".MuiInputBase-root": { flexGrow: 1 } },
+          },
+          {
+            name: "order",
+            label: "Порядок",
+            type: "number",
+            initialValue: data?.order,
+            helperText: "Число должно быть больше 0",
           },
           {
             name: "prices",
