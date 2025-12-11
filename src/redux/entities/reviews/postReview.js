@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export const postReview = createAsyncThunk(
   "reviews/postReview",
   async (review) => {
-    const response = await fetch("http://localhost:3000/api/reviews/new", {
+    const response = await fetch("https://podrostok-syktyvkar.ru/api/reviews/new", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
