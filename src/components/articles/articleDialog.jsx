@@ -18,7 +18,7 @@ export const ArticleDialog = ({ onCloseDialog, data, isNew }) => {
     const dataObj = { ...data, ...e, img: e.file ? e.file : data.img };
     const formData = new FormData();
     Object.keys(dataObj).forEach((key) => {
-      formData.append(key, dataObj[key]);
+      if (key !== "file") formData.append(key, dataObj[key]);
     });
 
     isNew ? sendPostRequest(formData) : sendPutRequest(formData);

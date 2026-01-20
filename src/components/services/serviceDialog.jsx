@@ -23,7 +23,7 @@ export const ServiceDialog = ({ onCloseDialog, data, isNew }) => {
           formData.append(`prices[${index}][name]`, price.name);
           formData.append(`prices[${index}][value]`, price.value);
         });
-      } else {
+      } else if (key !== "file") {
         formData.append(key, dataObj[key]);
       }
     });
