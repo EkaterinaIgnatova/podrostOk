@@ -15,7 +15,7 @@ export const ServiceDialog = ({ onCloseDialog, data, isNew }) => {
     useRequest(putService);
 
   const handleSubmit = (e) => {
-    const dataObj = { ...data, ...e, img: e.img ? e.img : data.img };
+    const dataObj = { ...data, ...e, img: e.file ? e.file : data.img };
     const formData = new FormData();
     Object.keys(dataObj).forEach((key) => {
       if (key === "prices") {

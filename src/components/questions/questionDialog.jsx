@@ -15,8 +15,13 @@ export const QuestionDialog = ({ onCloseDialog, data, isNew }) => {
     useRequest(putQuestion);
 
   const handleSubmit = (e) => {
-    const dataObj = { ...data, ...e };
-    isNew ? sendPostRequest(dataObj) : sendPutRequest(dataObj);
+    const dataObj = { ...data, ...e, file: e.file ? e.file : data.file };
+    const formData = new FormData();
+    Object.keys(dataObj).forEach((key) => {
+      formData.append(key, dataObj[key]);
+    });
+
+    isNew ? sendPostRequest(formData) : sendPutRequest(formData);
   };
 
   const handleCloseDialog = () => {
@@ -63,6 +68,11 @@ export const QuestionDialog = ({ onCloseDialog, data, isNew }) => {
             type: "number",
             initialValue: data?.order,
             helperText: "Число должно быть больше 0",
+          },
+          {
+            name: "file",
+            type: "file",
+            styles: { ".MuiInputBase-root": { flexGrow: 1 } },
           },
         ]}
         onSubmit={handleSubmit}

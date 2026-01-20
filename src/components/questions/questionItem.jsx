@@ -24,6 +24,18 @@ export const QuestionItem = ({ id, isAdmin }) => {
       questionActionsRef.current.style.display = visible ? "flex" : "none";
   };
 
+  const download = async () => {
+    const url = question.file;
+    const res = await fetch(url);
+    const blob = await res.blob();
+    console.warn(blob);
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "Текстовый документ.txt";
+    link.click();
+    URL.revokeObjectURL(link.href);
+  };
+
   return (
     <Accordion
       disableGutters
@@ -73,6 +85,13 @@ export const QuestionItem = ({ id, isAdmin }) => {
       </Box>
       <AccordionDetails sx={{ whiteSpace: "pre-line" }}>
         {question.text}
+        {question.file && (
+          <p>
+            <a href={question.file} download>
+              {question.file.split("/").at(-1).split("-")[1]}
+            </a>
+          </p>
+        )}
       </AccordionDetails>
     </Accordion>
   );

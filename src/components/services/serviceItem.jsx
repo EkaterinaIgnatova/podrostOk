@@ -109,6 +109,7 @@ export const ServiceItem = ({ id, isAdmin }) => {
             sx={{
               whiteSpace: "pre-line",
               width: matches[1] ? "auto" : "100%",
+              flexGrow: 1
             }}
           >
             {service.text}

@@ -7,10 +7,7 @@ export const postQuestion = createAsyncThunk(
       "https://podrostok-syktyvkar.ru/api/questions/new",
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(question),
+        body: question,
       }
     );
     const result = await response.json();

@@ -17,12 +17,12 @@ export const CustomForm = ({
     handleSubmit,
   } = methods;
 
-  const [img, setImg] = useState(null);
+  const [file, setFile] = useState(null);
 
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={handleSubmit((e) => onSubmit(img ? { ...e, img: img } : e))}
+        onSubmit={handleSubmit((e) => onSubmit(file ? { ...e, file: file } : e))}
       >
         {formControls.map((formControl) =>
           formControl.type === "group" ? (
@@ -58,7 +58,7 @@ export const CustomForm = ({
                   sx={formControl.styles}
                   onChange={(e) => {
                     onChange(e);
-                    if (formControl.type === "file") setImg(e.target.files[0]);
+                    if (formControl.type === "file") setFile(e.target.files[0]);
                   }}
                 />
               )}
@@ -70,7 +70,7 @@ export const CustomForm = ({
           <Button
             variant="contained"
             onClick={handleSubmit((e) =>
-              onSubmit(img ? { ...e, img: img } : e)
+              onSubmit(file ? { ...e, file: file } : e)
             )}
             disabled={!isValid}
             loading={loading}
