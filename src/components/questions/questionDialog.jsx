@@ -7,6 +7,7 @@ import {
 import { postQuestion } from "../../redux/entities/questions/postQuestion";
 import { putQuestion } from "../../redux/entities/questions/putQuestion";
 import { CustomForm } from "../customForm/customForm";
+import { useState } from "react";
 
 export const QuestionDialog = ({ onCloseDialog, data, isNew }) => {
   const { requestStatus: postRequestStatus, sendRequest: sendPostRequest } =
@@ -14,11 +15,21 @@ export const QuestionDialog = ({ onCloseDialog, data, isNew }) => {
   const { requestStatus: putRequestStatus, sendRequest: sendPutRequest } =
     useRequest(putQuestion);
 
+  const [files, setFiles] = useState(data?.fileNames || []);
+
   const handleSubmit = (e) => {
-    const dataObj = { ...data, ...e, file: e.file ? e.file : data.file };
+    const dataObj = { ...data, ...e, fileNames: files };
     const formData = new FormData();
     Object.keys(dataObj).forEach((key) => {
-      formData.append(key, dataObj[key]);
+      if (key === "files") {
+        dataObj[key].forEach((el) => formData.append("files[]", el));
+      } else if (key === "fileNames") {
+        dataObj[key].forEach((el, index) =>
+          formData.append(`fileNames[${index}]`, el),
+        );
+      } else {
+        formData.append(key, dataObj[key]);
+      }
     });
 
     isNew ? sendPostRequest(formData) : sendPutRequest(formData);
@@ -26,6 +37,12 @@ export const QuestionDialog = ({ onCloseDialog, data, isNew }) => {
 
   const handleCloseDialog = () => {
     onCloseDialog();
+  };
+
+  const removeFile = (index) => {
+    const filesCopy = [...files];
+    filesCopy.splice(index, 1);
+    setFiles(filesCopy);
   };
 
   if (
@@ -70,9 +87,11 @@ export const QuestionDialog = ({ onCloseDialog, data, isNew }) => {
             helperText: "Число должно быть больше 0",
           },
           {
-            name: "file",
+            name: "fileNames",
             type: "file",
-            styles: { ".MuiInputBase-root": { flexGrow: 1 } },
+            initialValue: files,
+            multiple: true,
+            removeMethod: removeFile,
           },
         ]}
         onSubmit={handleSubmit}

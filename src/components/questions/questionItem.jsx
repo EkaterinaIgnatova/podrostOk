@@ -85,13 +85,17 @@ export const QuestionItem = ({ id, isAdmin }) => {
       </Box>
       <AccordionDetails sx={{ whiteSpace: "pre-line" }}>
         {question.text}
-        {question.file && (
+        {question.fileNames?.map((el) => (
           <p>
-            <a href={question.file} download>
-              {question.file.split("/").at(-1).split("-")[1]}
+            <a
+              href={el}
+              download={el.split("/").at(-1).slice(14)}
+              style={{ color: theme.palette.primary.main }}
+            >
+              {el.split("/").at(-1).slice(14)}
             </a>
           </p>
-        )}
+        ))}
       </AccordionDetails>
     </Accordion>
   );
