@@ -1,4 +1,4 @@
-import { Box, Button, useMediaQuery } from "@mui/material";
+import { Box, Button, Divider, useMediaQuery, useTheme } from "@mui/material";
 import { CustomDialog } from "../customDialog/customDialog";
 import { selectServiceById } from "../../redux/entities/services/slice";
 import { useSelector } from "react-redux";
@@ -9,6 +9,7 @@ import { deleteService } from "../../redux/entities/services/deleteService";
 import { ServiceDialog } from "./serviceDialog";
 
 export const ServiceItem = ({ id, isAdmin }) => {
+  const theme = useTheme();
   const service = useSelector((state) => selectServiceById(state, id));
 
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -109,29 +110,48 @@ export const ServiceItem = ({ id, isAdmin }) => {
             sx={{
               whiteSpace: "pre-line",
               width: matches[1] ? "auto" : "100%",
-              flexGrow: 1
+              flexGrow: 1,
             }}
           >
             {service.text}
-            <Box
-              sx={{
-                textTransform: "uppercase",
-                marginTop: "16px",
-                display: "flex",
-                flexDirection: "column",
-                boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.2)",
-                padding: "8px",
-                borderRadius: "4px",
-              }}
-            >
-              {service.prices.map((price) => (
-                <span>
-                  {price.name} -{" "}
-                  <b style={{ whiteSpace: "nowrap" }}>{price.value} руб</b>
-                </span>
-              ))}
-            </Box>
           </Box>
+        </Box>
+        <h3>Стоимость</h3>
+        <Box
+          sx={{
+            textTransform: "uppercase",
+            marginTop: "16px",
+            display: "flex",
+            flexDirection: "column",
+            boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.2)",
+            padding: "8px",
+            borderRadius: "4px",
+          }}
+        >
+          {service.prices.map((price, index) => (
+            <>
+              {index > 0 && <Divider sx={{ margin: "8px 0" }}></Divider>}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: matches[1] ? "row" : "column",
+                  justifyContent: "space-between",
+                  textAlign: matches[1] ? "start" : "center",
+                }}
+              >
+                {price.name}
+                <Box
+                  sx={{
+                    fontWeight: "600",
+                    color: theme.palette.primary.main,
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {price.value} руб
+                </Box>
+              </Box>
+            </>
+          ))}
         </Box>
       </CustomDialog>
     </>
